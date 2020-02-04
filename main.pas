@@ -6,9 +6,9 @@ unit main;
 interface
 
 uses
- msetypes, mseglob, mseguiglob, mseguiintf, mseapplication, msestat, msemenus,
-  msegui,msegraphics, msegraphutils, mseevent, mseclasses, msewidgets, mseforms,
-  msegrids,msebitmap, msedragglob, msestatfile,msedispwidgets,mserichstring;
+  msetypes, mseglob, mseguiglob, mseguiintf, mseapplication, msestat, msemenus,
+  msegui, msegraphics, msegraphutils, mseevent, mseclasses, msewidgets, mseforms,
+  msegrids, msebitmap, msedragglob, msestatfile, msedispwidgets, mserichstring;
 
 const
   cellwidth = 40;
@@ -142,14 +142,14 @@ begin
   (*
   result := board.cells[dest.col, dest.row].piece = pk_none;
   *)
-  result := rules.IsMoveLegal(source.col, source.row, dest.col, dest.row);
+  result := rules.IsMoveLegal(source.col, source.row, dest.col, dest.row); (* Roland *)
   if result and move then begin
     state1 := board.cells[dest.col, dest.row].state;
     board.cells[dest.col, dest.row] := board.cells[source.col, source.row];
     board.cells[dest.col, dest.row].state := state1; //restore
     board.cells[source.col, source.row].piece := pk_none;
     rules.DoMove(source.col, source.row, dest.col, dest.row);
-    mainfo.gamestatedisp.Text := rules.ArbitratorMessage();
+    mainfo.gamestatedisp.Text := rules.ArbitratorMessage(); (* Roland *)
   end;
 end;
 
@@ -232,12 +232,12 @@ end;
 procedure tmainfo.createev(const sender: TObject);
 begin
   initboard();
-  mainfo.gamestatedisp.Text := rules.ArbitratorMessage();
 end;
 
 procedure tmainfo.boardchanged();
 begin
   grid.invalidate();
+  mainfo.gamestatedisp.Text := rules.ArbitratorMessage(); (* Roland *)
 end;
 
 procedure tmainfo.invalidateboardcell(const acell: cellty);
