@@ -7,11 +7,13 @@ uses
   Main;
 
 function IsMoveLegal(const FromCol: colty; const FromRow: rowty; const ToCol: colty; const ToRow: rowty): boolean;
+procedure DoMove(const FromCol: colty; const FromRow: rowty; const ToCol: colty; const ToRow: rowty);
+function ArbitratorMessage(): string;
 
 implementation
 
 uses
-  SysUtils, Game, Fen;
+  SysUtils, StrUtils, ChessTypes, Game, Fen, Language;
 
 const
   CSquareName: array[colty, rowty] of string[2] = (
@@ -34,6 +36,34 @@ var
 begin
   LMove := Concat(CSquareName[FromCol, FromRow], CSquareName[ToCol, ToRow]);
   result := LGame.IsLegal(LMove);
+end;
+
+procedure DoMove(const FromCol: colty; const FromRow: rowty; const ToCol: colty; const ToRow: rowty);
+var
+  LMove: string;
+begin
+  LMove := Concat(CSquareName[FromCol, FromRow], CSquareName[ToCol, ToRow]);
+  LGame.DoMove(LMove);
+end;
+
+function ArbitratorMessage(): string;
+begin
+  case LGame.State of
+    csProgress:
+      result := Concat(
+        IfThen(LGame.Check, Concat(GetText(txCheck), ' '), ''),
+        IfThen(LGame.ActiveColor = pcWhite, GetText(txWhiteToMove), GetText(txBlackToMove))
+      );
+    csCheckmate:
+      result := Concat(
+        GetText(txCheckmate), ' ',
+        IfThen(LGame.ActiveColor = pcWhite, GetText(txBlackWins), GetText(txWhiteWins))
+      );
+    csStalemate:
+      result := GetText(txStalemate);
+    csDraw:
+      result := GetText(txDraw);
+  end;
 end;
 
 initialization
