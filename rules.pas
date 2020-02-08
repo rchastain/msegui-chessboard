@@ -6,8 +6,8 @@ interface
 uses
   Main;
 
-function IsMoveLegal(const FromCol: colty; const FromRow: rowty; const ToCol: colty; const ToRow: rowty): boolean;
-procedure DoMove(const FromCol: colty; const FromRow: rowty; const ToCol: colty; const ToRow: rowty);
+function IsMoveLegal(const FromCell, ToCell: cellty): boolean;
+procedure DoMove(const FromCell, ToCell: cellty);
 function ArbitratorMessage(): string;
 
 implementation
@@ -30,19 +30,19 @@ const
 var
   LGame: TChessGame;
 
-function IsMoveLegal(const FromCol: colty; const FromRow: rowty; const ToCol: colty; const ToRow: rowty): boolean;
+function IsMoveLegal(const FromCell, ToCell: cellty): boolean;
 var
   LMove: string;
 begin
-  LMove := Concat(CSquareName[FromCol, FromRow], CSquareName[ToCol, ToRow]);
+  LMove := Concat(CSquareName[FromCell.col, FromCell.row], CSquareName[ToCell.col, ToCell.row]);
   result := LGame.IsLegal(LMove);
 end;
 
-procedure DoMove(const FromCol: colty; const FromRow: rowty; const ToCol: colty; const ToRow: rowty);
+procedure DoMove(const FromCell, ToCell: cellty);
 var
   LMove: string;
 begin
-  LMove := Concat(CSquareName[FromCol, FromRow], CSquareName[ToCol, ToRow]);
+  LMove := Concat(CSquareName[FromCell.col, FromCell.row], CSquareName[ToCell.col, ToCell.row]);
   LGame.DoMove(LMove);
 end;
 

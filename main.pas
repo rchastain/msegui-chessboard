@@ -142,13 +142,13 @@ begin
   (*
   result := board.cells[dest.col, dest.row].piece = pk_none;
   *)
-  result := rules.IsMoveLegal(source.col, source.row, dest.col, dest.row); (* Roland *)
+  result := rules.IsMoveLegal(source, dest); (* Roland *)
   if result and move then begin
     state1 := board.cells[dest.col, dest.row].state;
     board.cells[dest.col, dest.row] := board.cells[source.col, source.row];
     board.cells[dest.col, dest.row].state := state1; //restore
     board.cells[source.col, source.row].piece := pk_none;
-    rules.DoMove(source.col, source.row, dest.col, dest.row);
+    rules.DoMove(source, dest); (* Roland *)
     mainfo.gamestatedisp.Text := rules.ArbitratorMessage(); (* Roland *)
   end;
 end;
