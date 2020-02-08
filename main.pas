@@ -145,7 +145,7 @@ begin
   le programme dans son état actuel.
 *)
 end;
- 
+
 function piecemove(var board: boardty; const source, dest: cellty; const move: boolean): boolean; //returns true if allowed
 var
   state1: cellstatesty;
@@ -154,7 +154,7 @@ begin
   result := possiblylegalmove(board, source, dest) and rules.IsMoveLegal(source, dest); (* Roland *)
   if result and move then
   begin
-    if board.cells[source.col, source.row].piece = pk_king then (* Mouvement du roi *)
+    if board.cells[source.col, source.row].piece = pk_king then (* Mouvement d'un roi *)
     begin
       if (source.col = col_e) and (dest.col = col_g) then (* e1g1, e8g8 *)
       begin
@@ -170,7 +170,14 @@ begin
         board.cells[col_d, dest.row].state := state1; //restore
         board.cells[col_a, source.row].piece := pk_none;
       end;
-    end;
+    end else
+      if board.cells[source.col, source.row].piece = pk_pawn then (* Mouvement d'un pion *)
+      begin
+        if (board.cells[dest.col, dest.row].piece = pk_none) and (dest.col <> source.col) then
+        begin
+          board.cells[dest.col, source.row].piece := pk_none;
+        end;
+      end;
     state1 := board.cells[dest.col, dest.row].state;
     board.cells[dest.col, dest.row] := board.cells[source.col, source.row];
     board.cells[dest.col, dest.row].state := state1; //restore
