@@ -30,11 +30,21 @@ const
 var
   LGame: TChessGame;
 
+function ChangeCastlingNotation(const AMove: string): string;
+begin
+  if (AMove = 'e1g1') and LGame.IsLegal('e1h1') and LGame.IsCastling('e1h1') then begin result := 'e1h1'; end else
+  if (AMove = 'e1c1') and LGame.IsLegal('e1a1') and LGame.IsCastling('e1a1') then begin result := 'e1a1'; end else
+  if (AMove = 'e8g8') and LGame.IsLegal('e8h8') and LGame.IsCastling('e8h8') then begin result := 'e8h8'; end else
+  if (AMove = 'e8c8') and LGame.IsLegal('e8a8') and LGame.IsCastling('e8a8') then begin result := 'e8a8'; end else
+    result := AMove;
+end;
+
 function IsMoveLegal(const FromCell, ToCell: cellty): boolean;
 var
   LMove: string;
 begin
   LMove := Concat(CSquareName[FromCell.col, FromCell.row], CSquareName[ToCell.col, ToCell.row]);
+  LMove := ChangeCastlingNotation(LMove);
   result := LGame.IsLegal(LMove);
 end;
 
@@ -43,6 +53,7 @@ var
   LMove: string;
 begin
   LMove := Concat(CSquareName[FromCell.col, FromCell.row], CSquareName[ToCell.col, ToCell.row]);
+  LMove := ChangeCastlingNotation(LMove);
   LGame.DoMove(LMove);
 end;
 

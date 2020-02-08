@@ -123,7 +123,8 @@ end;
 function gridcoordtocell(const acoord: gridcoordty; out cell: cellty): boolean;
 begin
   result := (acoord.col >= 0) and (acoord.row >= 0) and (acoord.col < 8) and (acoord.row < 8);
-  if result then begin
+  if result then
+  begin
     cell := gridcoordtocell(acoord);
   end;
 end;
@@ -134,16 +135,42 @@ begin
   result.row := 7 - ord(acell.row);
 end;
 
+function possiblylegalmove(const board: boardty; const source, dest: cellty): boolean;
+begin
+  result := (board.cells[dest.col, dest.row].piece = pk_none)
+    or (board.cells[dest.col, dest.row].color <> board.cells[source.col, source.row].color);
+(*
+  Pour éliminer le roque à la façon des échecs 960 (où le roi prend la tour),
+  que l'unité Rules accepterait, mais qui ne serait pas géré correctement par
+  le programme dans son état actuel.
+*)
+end;
+ 
 function piecemove(var board: boardty; const source, dest: cellty; const move: boolean): boolean; //returns true if allowed
 var
   state1: cellstatesty;
 begin
   //implement chess rules here
-  (*
-  result := board.cells[dest.col, dest.row].piece = pk_none;
-  *)
-  result := rules.IsMoveLegal(source, dest); (* Roland *)
-  if result and move then begin
+  result := possiblylegalmove(board, source, dest) and rules.IsMoveLegal(source, dest); (* Roland *)
+  if result and move then
+  begin
+    if board.cells[source.col, source.row].piece = pk_king then (* Mouvement du roi *)
+    begin
+      if (source.col = col_e) and (dest.col = col_g) then (* e1g1, e8g8 *)
+      begin
+        state1 := board.cells[col_f, dest.row].state;
+        board.cells[col_f, dest.row] := board.cells[col_h, source.row];
+        board.cells[col_f, dest.row].state := state1; //restore
+        board.cells[col_h, source.row].piece := pk_none;
+      end else
+      if (source.col = col_e) and (dest.col = col_c) then (* e1c1, e8c8 *)
+      begin
+        state1 := board.cells[col_d, dest.row].state;
+        board.cells[col_d, dest.row] := board.cells[col_a, source.row];
+        board.cells[col_d, dest.row].state := state1; //restore
+        board.cells[col_a, source.row].piece := pk_none;
+      end;
+    end;
     state1 := board.cells[dest.col, dest.row].state;
     board.cells[dest.col, dest.row] := board.cells[source.col, source.row];
     board.cells[dest.col, dest.row].state := state1; //restore
@@ -158,10 +185,13 @@ var
   c1: colty;
   r1: rowty;
 begin
-  with board do begin
+  with board do
+  begin
     dragpiece.piece := pk_none;
-    for c1 := low(c1) to high(c1) do begin
-      for r1 := low(r1) to high(r1) do begin
+    for c1 := low(c1) to high(c1) do
+    begin
+      for r1 := low(r1) to high(r1) do
+      begin
         cells[c1, r1].state := cells[c1, r1].state - [cs_dragsource, cs_reject, cs_accept]; //remove drag states
       end;
     end;
@@ -173,7 +203,8 @@ end;
 constructor tpiecedragobject.create(const board: boardty; const agrid: tcustomgrid; var ainstance: tdragobject; const apos: pointty);
 begin
   fboard := @board;
-  if not gridcoordtocell(agrid.cellatpos(apos), fboardcell) then begin
+  if not gridcoordtocell(agrid.cellatpos(apos), fboardcell) then
+  begin
     componentexception(agrid, 'Invalid cell');
   end;
   inherited create(agrid, ainstance, apos);
@@ -194,33 +225,43 @@ var
   r1: rowty;
 begin
   fillchar(fboard, sizeof(fboard), 0);
-  for c1 := low(colty) to high(colty) do begin
-    with fboard.cells[c1, row_2] do begin
+  for c1 := low(colty) to high(colty) do
+  begin
+    with fboard.cells[c1, row_2] do
+    begin
       piece := pk_pawn;
       color := pc_white;
     end;
-    with fboard.cells[c1, row_1] do begin
+    with fboard.cells[c1, row_1] do
+    begin
       color := pc_white;
       piece := pieceorder[c1];
     end;
-    with fboard.cells[c1, row_7] do begin
+    with fboard.cells[c1, row_7] do
+    begin
       piece := pk_pawn;
       color := pc_black;
     end;
-    with fboard.cells[c1, row_8] do begin
+    with fboard.cells[c1, row_8] do
+    begin
       color := pc_black;
       piece := pieceorder[c1];
     end;
-    if odd(ord(c1)) then begin
-      for r1 := low(r1) to high(r1) do begin
-        if odd(ord(r1)) then begin
+    if odd(ord(c1)) then
+    begin
+      for r1 := low(r1) to high(r1) do
+      begin
+        if odd(ord(r1)) then
+        begin
           fboard.cells[c1, r1].state := [cs_black];
         end;
       end;
-    end
-    else begin
-      for r1 := low(r1) to high(r1) do begin
-        if not odd(ord(r1)) then begin
+    end else
+    begin
+      for r1 := low(r1) to high(r1) do
+      begin
+        if not odd(ord(r1)) then
+        begin
           fboard.cells[c1, r1].state := [cs_black];
         end;
       end;
@@ -247,13 +288,14 @@ end;
 
 function tmainfo.dragrect(): rectty;
 begin
-  if fboard.dragpiece.piece <> pk_none then begin
+  if fboard.dragpiece.piece <> pk_none then
+  begin
     result.x := fboard.dragpos.x - cellwidth div 2;
     result.y := fboard.dragpos.y - cellheight div 2;
     result.cx := cellwidth;
     result.cy := cellheight;
-  end
-  else begin
+  end else
+  begin
     result := nullrect;
   end;
 end;
@@ -265,24 +307,29 @@ end;
 
 procedure tmainfo.drawcell(const acanvas: tcanvas; const apos: pointty; const acelldata: celldataty);
 begin
-  with acelldata do begin
-    if cs_dragsource in state then begin
+  with acelldata do
+  begin
+    if cs_dragsource in state then
+    begin
       acanvas.fillrect(mr(0, 0, cellwidth, cellheight), cl_ltyellow);
-    end
-    else begin
-      if cs_reject in state then begin
+    end else
+    begin
+      if cs_reject in state then
+      begin
         acanvas.fillrect(mr(0, 0, cellwidth, cellheight), cl_ltred);
-      end
-      else begin
-        if cs_accept in state then begin
+      end else
+      begin
+        if cs_accept in state then
+        begin
           acanvas.fillrect(mr(0, 0, cellwidth, cellheight), cl_ltgreen);
         end;
       end;
     end;
-    if cs_black in state then begin
+    if cs_black in state then
+    begin
       cellimages.paint(acanvas, 1, apos);
-    end
-    else begin
+    end else
+    begin
       cellimages.paint(acanvas, 0, apos);
     end;
     pieceimages.paint(acanvas, ord(piece) - 1, apos, cl_default, cl_default, cl_default, ord(color));
@@ -312,8 +359,10 @@ end;
 
 procedure tmainfo.setcellpiece(const acell: cellty; const avalue: piecekindty);
 begin
-  with fboard.cells[acell.col, acell.row] do begin
-    if piece <> avalue then begin
+  with fboard.cells[acell.col, acell.row] do
+  begin
+    if piece <> avalue then
+    begin
       piece := avalue;
       invalidateboardcell(acell);
     end;
@@ -327,8 +376,10 @@ end;
 
 procedure tmainfo.setcellcolor(const acell: cellty; const avalue: piececolorty);
 begin
-  with fboard.cells[acell.col, acell.row] do begin
-    if color <> avalue then begin
+  with fboard.cells[acell.col, acell.row] do
+  begin
+    if color <> avalue then
+    begin
       color := avalue;
       invalidateboardcell(acell);
     end;
@@ -342,8 +393,10 @@ end;
 
 procedure tmainfo.setcellstate(const acell: cellty; const avalue: cellstatesty);
 begin
-  with fboard.cells[acell.col, acell.row] do begin
-    if state <> avalue then begin
+  with fboard.cells[acell.col, acell.row] do
+  begin
+    if state <> avalue then
+    begin
       state := avalue;
       invalidateboardcell(acell);
     end;
@@ -375,15 +428,18 @@ begin
   cellstate[fboard.dragdest] := cellstate[fboard.dragdest] -
     [cs_accept, cs_reject];
   accept := gridcoordtocell(grid.cellatpos(fboard.dragpos), cell1);
-  if accept then begin
+  if accept then
+  begin
     fboard.dragdest := cell1;
-    with tpiecedragobject(adragobject) do begin
+    with tpiecedragobject(adragobject) do
+    begin
       accept := piecemove(self.fboard, boardcell, cell1, amove);
     end;
-    if accept then begin
+    if accept then
+    begin
       cellstate[cell1] := cellstate[cell1] + [cs_accept];
-    end
-    else begin
+    end else
+    begin
       cellstate[cell1] := cellstate[cell1] + [cs_reject];
     end;
   end;
@@ -393,8 +449,10 @@ procedure tmainfo.dragbeginev(const asender: TObject; const apos: pointty; var a
 var
   cell1: cellty;
 begin
-  if gridcoordtocell(grid.cellatpos(apos), cell1) then begin
-    if cellpiece[cell1] <> pk_none then begin
+  if gridcoordtocell(grid.cellatpos(apos), cell1) then
+  begin
+    if cellpiece[cell1] <> pk_none then
+    begin
       adragobject := tpiecedragobject.create(fboard, grid, adragobject, apos);
       fboard.dragpiece := cells[cell1];
       fboard.dragpiece.state := [];
