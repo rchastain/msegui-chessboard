@@ -173,10 +173,14 @@ begin
     end else
       if board.cells[source.col, source.row].piece = pk_pawn then (* Mouvement d'un pion *)
       begin
-        if (board.cells[dest.col, dest.row].piece = pk_none) and (dest.col <> source.col) then
+        if (board.cells[dest.col, dest.row].piece = pk_none) and (dest.col <> source.col) then (* Prise en passant *)
         begin
           board.cells[dest.col, source.row].piece := pk_none;
-        end;
+        end else
+          if (dest.row = row_1) or (dest.row = row_8) then
+          begin
+            board.cells[source.col, source.row].piece := pk_queen;
+          end;
       end;
     state1 := board.cells[dest.col, dest.row].state;
     board.cells[dest.col, dest.row] := board.cells[source.col, source.row];
