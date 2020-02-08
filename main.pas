@@ -6,9 +6,9 @@ unit main;
 interface
 
 uses
-  msetypes, mseglob, mseguiglob, mseguiintf, mseapplication, msestat, msemenus,
-  msegui, msegraphics, msegraphutils, mseevent, mseclasses, msewidgets, mseforms,
-  msegrids, msebitmap, msedragglob, msestatfile, msedispwidgets, mserichstring;
+ msetypes, mseglob, mseguiglob, mseguiintf, mseapplication, msestat, msemenus,
+ msegui, msegraphics, msegraphutils, mseevent, mseclasses, msewidgets, mseforms,
+ msegrids, msebitmap, msedragglob, msestatfile, msedispwidgets, mserichstring;
 
 const
   cellwidth = 40;
@@ -55,6 +55,7 @@ type
     mainmenuframe: tframecomp;
     menuitemframe: tframecomp;
     gamestatedisp: tstringdisp;
+    fendisp: tstringdisp;
     procedure createev(const sender: TObject);
     procedure drawcellev(const sender: tcol; const canvas: tcanvas; var cellinfo: cellinfoty);
     procedure boardpaintev(const sender: twidget; const acanvas: tcanvas);
@@ -187,6 +188,7 @@ begin
     board.cells[dest.col, dest.row].state := state1; //restore
     board.cells[source.col, source.row].piece := pk_none;
     rules.DoMove(source, dest); (* Roland *)
+    mainfo.fendisp.Text := CurrPosFen;
     mainfo.gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
   end;
 end;
@@ -289,6 +291,7 @@ end;
 procedure tmainfo.boardchanged();
 begin
   grid.invalidate();
+  mainfo.fendisp.Text := CurrPosFen;
   mainfo.gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
 end;
 

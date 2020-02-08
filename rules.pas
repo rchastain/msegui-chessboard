@@ -10,6 +10,7 @@ function IsMoveLegal(const FromCell, ToCell: cellty): boolean;
 procedure DoMove(const FromCell, ToCell: cellty);
 function GameStateMessage: string;
 procedure ResetGame;
+function CurrPosFen: string;
 
 implementation
 
@@ -82,6 +83,11 @@ procedure ResetGame;
 begin
   LGame.Free;
   LGame := TChessGame.Create(CFenStartPosition);
+end;
+
+function CurrPosFen: string;
+begin
+  result := LGame.GetFen(FALSE);
 end;
 
 initialization
