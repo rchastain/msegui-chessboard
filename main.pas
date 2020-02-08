@@ -6,9 +6,9 @@ unit main;
 interface
 
 uses
- msetypes, mseglob, mseguiglob, mseguiintf, mseapplication, msestat, msemenus,
- msegui, msegraphics, msegraphutils, mseevent, mseclasses, msewidgets, mseforms,
- msegrids, msebitmap, msedragglob, msestatfile, msedispwidgets, mserichstring;
+  msetypes, mseglob, mseguiglob, mseguiintf, mseapplication, msestat, msemenus,
+  msegui, msegraphics, msegraphutils, mseevent, mseclasses, msewidgets, mseforms,
+  msegrids, msebitmap, msedragglob, msestatfile, msedispwidgets, mserichstring;
 
 const
   cellwidth = 40;
@@ -188,8 +188,8 @@ begin
     board.cells[dest.col, dest.row].state := state1; //restore
     board.cells[source.col, source.row].piece := pk_none;
     rules.DoMove(source, dest); (* Roland *)
-    mainfo.fendisp.Text := CurrPosFen;
-    mainfo.gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
+    //mainfo.fendisp.Text := CurrPosFen;
+    //mainfo.gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
   end;
 end;
 
@@ -291,8 +291,8 @@ end;
 procedure tmainfo.boardchanged();
 begin
   grid.invalidate();
-  mainfo.fendisp.Text := CurrPosFen;
-  mainfo.gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
+  fendisp.Text := CurrPosFen;
+  gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
 end;
 
 procedure tmainfo.invalidateboardcell(const acell: cellty);
@@ -449,6 +449,9 @@ begin
     with tpiecedragobject(adragobject) do
     begin
       accept := piecemove(self.fboard, boardcell, cell1, amove);
+
+      fendisp.Text := CurrPosFen; (* Roland *)
+      gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
     end;
     if accept then
     begin
