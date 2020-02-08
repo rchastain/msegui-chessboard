@@ -2,7 +2,7 @@ object mainfo: tmainfo
   bounds_x = 26
   bounds_y = 149
   bounds_cx = 382
-  bounds_cy = 440
+  bounds_cy = 457
   container.frame.localprops = []
   container.frame.localprops1 = []
   container.face.fade_direction = gd_left
@@ -12,7 +12,7 @@ object mainfo: tmainfo
     0
     25
     382
-    415
+    432
   )
   mainmenu = tmainmenu1
   statfile = tstatfile1
@@ -203,6 +203,16 @@ object mainfo: tmainfo
     frame.localprops = []
     frame.localprops1 = []
     taborder = 1
+    bounds_x = 8
+    bounds_y = 405
+    bounds_cx = 366
+    bounds_cy = 17
+    reffontheight = 13
+  end
+  object fendisp: tstringdisp
+    frame.localprops = []
+    frame.localprops1 = []
+    taborder = 2
     bounds_x = 8
     bounds_y = 380
     bounds_cx = 366
