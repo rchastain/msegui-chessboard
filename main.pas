@@ -187,7 +187,7 @@ begin
     board.cells[dest.col, dest.row].state := state1; //restore
     board.cells[source.col, source.row].piece := pk_none;
     rules.DoMove(source, dest); (* Roland *)
-    mainfo.gamestatedisp.Text := rules.ArbitratorMessage(); (* Roland *)
+    mainfo.gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
   end;
 end;
 
@@ -289,7 +289,7 @@ end;
 procedure tmainfo.boardchanged();
 begin
   grid.invalidate();
-  mainfo.gamestatedisp.Text := rules.ArbitratorMessage(); (* Roland *)
+  mainfo.gamestatedisp.Text := rules.GameStateMessage; (* Roland *)
 end;
 
 procedure tmainfo.invalidateboardcell(const acell: cellty);
@@ -426,6 +426,7 @@ end;
 
 procedure tmainfo.resetev(const sender: TObject);
 begin
+  ResetGame;
   initboard();
 end;
 

@@ -8,7 +8,8 @@ uses
 
 function IsMoveLegal(const FromCell, ToCell: cellty): boolean;
 procedure DoMove(const FromCell, ToCell: cellty);
-function ArbitratorMessage(): string;
+function GameStateMessage: string;
+procedure ResetGame;
 
 implementation
 
@@ -57,7 +58,7 @@ begin
   LGame.DoMove(LMove);
 end;
 
-function ArbitratorMessage(): string;
+function GameStateMessage: string;
 begin
   case LGame.State of
     csProgress:
@@ -75,6 +76,12 @@ begin
     csDraw:
       result := GetText(txDraw);
   end;
+end;
+
+procedure ResetGame;
+begin
+  LGame.Free;
+  LGame := TChessGame.Create(CFenStartPosition);
 end;
 
 initialization
