@@ -2,16 +2,14 @@
 program chessboard;
 
 {$mode objfpc}{$h+}
-{$ifdef mswindows}
-{$apptype gui}
-{$endif}
+{$ifdef mswindows}{$apptype gui}{$endif}
 
 uses
 {$ifdef unix}
   cthreads,
-{$endif} 
+{$endif}
   msegui, main;
-
+  
 begin
   application.createform(tmainfo, mainfo);
   application.run;

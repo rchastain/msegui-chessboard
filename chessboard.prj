@@ -17,18 +17,9 @@ order14=0
 order15=0
 order16=0
 [projectoptions]
-projectdir=/C:/Roland/pascal/echecs/msegui/chessboard-202002041338
-projectfilename=/C:/Roland/pascal/echecs/msegui/chessboard-202002041338/chessboard.prj
-finddialog=8
- [finddialogfo.selectedonly]
- value=0
- [finddialogfo]
- stackedunder=
- x=319
- y=205
- cx=371
- cy=93
-options=133
+projectdir=/C:/Roland/pascal/echecs/msegui/chessboard-202002110447
+projectfilename=/C:/Roland/pascal/echecs/msegui/chessboard-202002110447/chessboard.prj
+options=131
  [projectoptionsfo.toolshortcuts]
  dropdowncolwidths=3
   70
@@ -107,8 +98,7 @@ options=133
  sortdescend7=0
  [projectoptionsfo.makeoptionsgrid]
  propcolwidthref=739
- values0=5
-  
+ values0=4
   
   
   
@@ -122,11 +112,10 @@ options=133
  sortdescend5=0
  sortdescend6=0
  sortdescend7=0
- values8=5
+ values8=4
   -Xg -l -Mobjfpc -Sh -Fcutf8
   -gl -O-
   -B
-  -dDEBUG
   -O2 -XX -Xs -CX
  sortdescend8=0
  [projectoptionsfo.makegroupbox]
@@ -158,8 +147,8 @@ options=133
  index=2
  [projectoptionsfo]
  stackedunder=
- x=225
- y=87
+ x=302
+ y=109
  cx=832
  cy=581
 sourcefilemasks=3
@@ -268,8 +257,8 @@ targetfile=${PROJECTNAME}${EXEEXT}
 makecommand=${COMPILER}
 makedir=
 unitdirs=5
- ./library/chess
- ./library
+ library/chess
+ library
  ${MSEDIR}lib/addon/*/
  ${MSELIBDIR}kernel/$TARGETOSDIR/
  ${MSELIBDIR}*/
@@ -280,25 +269,22 @@ objpref=-Fo
 targpref=-o
 befcommand=0
 aftcommand=0
-makeoptions=5
+makeoptions=4
  -Xg -l -Mobjfpc -Sh -Fcutf8
  -gl -O-
  -B
- -dDEBUG
  -O2 -XX -Xs -CX
 reversepathorder=0
-makeoptpurpose=5
- 
+makeoptpurpose=4
  
  
  
  
 befcommandon=0
-makeoptionson=5
+makeoptionson=4
  63
  31
  34
- 28
  32
 aftcommandon=0
 unitdirson=5
@@ -535,7 +521,7 @@ modulenames=1
 moduletypes=1
  TMAINFO
 modulefiles=1
- /C:/Roland/pascal/echecs/msegui/chessboard-202002041338/main.mfm
+ /C:/Roland/pascal/echecs/msegui/chessboard-202002110447/main.mfm
 macrogroup=0
 forcezorder=0
 stripmessageesc=0
@@ -614,31 +600,25 @@ envvarons=0
 [edit]
 hintwidth=0
 hintheight=0
-finddtext=pieceimage
-findhistory=1
- pieceimage
+finddtext=
+findhistory=0
 findoptions=1
-editpos=3
- 4,234
- 0,-1073741823
- 0,-1073741823
+editpos=2
+ 17,80
+ 22,17
 bookmarks0=0
 bookmarks1=0
-bookmarks2=0
-sourcefiles=3
- /C:/Roland/pascal/echecs/msegui/chessboard-202002041338/main.pas
- /C:/Roland/pascal/echecs/msegui/chessboard-20200204/chessboard.pas
- /C:/Roland/pascal/echecs/msegui/chessboard-20200204/rules.pas
-relpaths=3
+sourcefiles=2
+ /C:/Roland/pascal/echecs/msegui/chessboard-202002110447/main.pas
+ /C:/Roland/pascal/echecs/msegui/chessboard-202002110447/rules.pas
+relpaths=2
  main.pas
- chessboard.pas
  rules.pas
-ismoduletexts=3
- 0
+ismoduletexts=2
  0
  0
 modules=1
- /C:/Roland/pascal/echecs/msegui/chessboard-202002041338/main.mfm
+ /C:/Roland/pascal/echecs/msegui/chessboard-202002110447/main.mfm
 moduleoptions=1
  0
 visiblemodules=1
@@ -646,9 +626,9 @@ visiblemodules=1
 nomenumodules=1
  0
 [sourcefo.tabwidget]
-tabsize=60
+tabsize=114
 firsttab=0
-index=0
+index=1
 [layout]
 windowlayout=568
  [mainfo.openform]
@@ -692,7 +672,7 @@ windowlayout=568
  ncx=0
  ncy=0
  x=8
- y=31
+ y=116
  cx=323
  cy=64
  rcx=0
@@ -904,32 +884,32 @@ windowlayout=568
  [objectinspectorfo]
  splitdir=0
  useroptions=268451947
- stackedunder=_mse_mainfo_mse_
+ stackedunder=mainfo
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=951
- y=98
- cx=296
- cy=566
+ x=1087
+ y=117
+ cx=276
+ cy=605
  rcx=0
  rcy=0
  wsize=0
  active=0
  visible=1
  [objectinspectorfo.grid]
- propcolwidthref=286
- width0=105
+ propcolwidthref=266
+ width0=99
  sortdescend0=0
- width1=175
+ width1=161
  sortdescend1=0
  [symbolfo]
  splitdir=0
  useroptions=268451963
- stackedunder=breakpointsfo
+ stackedunder=mainfo.panel2
  parent=
  mdistate=0
  nx=0
@@ -1017,15 +997,15 @@ windowlayout=568
  ncx=0
  ncy=0
  x=0
- y=510
+ y=500
  cx=675
  cy=95
  rcx=675
- rcy=605
+ rcy=595
  [componentstorefo]
  splitdir=0
  useroptions=268460155
- stackedunder=targetconsolefo
+ stackedunder=projecttreefo
  parent=
  mdistate=0
  nx=0
@@ -1088,17 +1068,17 @@ windowlayout=568
  [componentpalettefo]
  splitdir=0
  useroptions=268460139
- stackedunder=mainfo
+ stackedunder=mainfo.panel1
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=335
- y=31
- cx=685
- cy=103
+ x=8
+ y=33
+ cx=1350
+ cy=50
  rcx=0
  rcy=0
  wsize=0
@@ -1135,7 +1115,7 @@ windowlayout=568
  x=0
  y=0
  cx=675
- cy=605
+ cy=595
  rcx=0
  rcy=0
  [actionsmo.watchesonact]
@@ -1146,9 +1126,9 @@ windowlayout=568
  irqoff=0
  splitdir=0
  useroptions=268451947
- stackedunder=projecttreefo
+ stackedunder=breakpointsfo
  parent=
- mdistate=0
+ mdistate=3
  nx=0
  ny=0
  ncx=0
@@ -1165,17 +1145,17 @@ windowlayout=568
  [mainfo.panel1]
  splitdir=2
  useroptions=302022123
- stackedunder=componentpalettefo
+ stackedunder=_mse_mainfo_mse_
  parent=
  mdistate=0
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=479
- y=82
+ x=398
+ y=117
  cx=685
- cy=605
+ cy=595
  rcx=0
  rcy=0
  wsize=0
@@ -1184,7 +1164,7 @@ windowlayout=568
  [mainfo.panel2]
  splitdir=2
  useroptions=302022123
- stackedunder=objectinspectorfo
+ stackedunder=componentpalettefo
  parent=
  mdistate=0
  nx=0
@@ -1203,17 +1183,17 @@ windowlayout=568
  [_mse_mainfo_mse_]
  splitdir=0
  useroptions=268451963
- stackedunder=mainfo.panel1
+ stackedunder=objectinspectorfo
  parent=
  mdistate=3
  nx=0
  ny=0
  ncx=0
  ncy=0
- x=26
- y=149
- cx=392
- cy=440
+ x=2
+ y=212
+ cx=390
+ cy=431
  rcx=0
  rcy=0
  wsize=0
