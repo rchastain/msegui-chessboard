@@ -12,7 +12,8 @@ declare -ar OPS=(
     -Mobjfpc
     -Sh
     -Fumseide-msegui/lib/common/{*,kernel/linux}
-    -Fulibrary/*
+    -Fulibrary
+    -Fulibrary/chess
     -B
 )
 declare -i exitCode=0
@@ -35,5 +36,5 @@ while read -r; do
         fi
         printf '%s\n' "${MAPFILE[@]}"
     fi
-done < <(find '.' -type 'f' -name '*.prj')
+done < <(find '.' -type 'f' -name 'chessboard.prj')
 exit "${exitCode}"
