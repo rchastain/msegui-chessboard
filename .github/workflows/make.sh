@@ -9,12 +9,10 @@ case ${ID:?} in
     ' >/dev/null ;;
 esac
 declare -ar OPS=(
-    -Fuuse/mseide-msegui/lib/common/{*,kernel/linux}
-    -Fuuse/bgrabitmap/bgrabitmap
+    -Mobjfpc
+    -Sh
+    -Fumseide-msegui/lib/common/{*,kernel/linux}
     -Fulibrary/*
-    -dmse_dynpo
-    -dclass_bridge
-    -dBGRABITMAP_USE_MSEGUI
     -B
 )
 declare -i exitCode=0
